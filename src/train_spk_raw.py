@@ -41,7 +41,8 @@ class Encoder:
     def __init__(self, enc):
         self.enc = enc
         self.order = enc.encoder.order
-        self.split = self.order.index(str(TRAIN_FROM))
+        # TRAIN_FROM < 0 keeps the whole SEANet frozen (only the transformer and downsampler train)
+        self.split = len(self.order) if TRAIN_FROM < 0 else self.order.index(str(TRAIN_FROM))
 
     def trainable(self):
         ps = [p for k in self.order[self.split:] for p in self.enc.encoder.model[k].parameters()]
@@ -159,7 +160,8 @@ def main():
     params = E.trainable()
     for p in params:
         p.requires_grad_(True)
-    print(f"trainable parameters {sum(p.numel() for p in params) / 1e6:.1f}M (SEANet from model.{TRAIN_FROM})", flush=True)
+    print(f"trainable parameters {sum(p.numel() for p in params) / 1e6:.1f}M "
+          f"({'SEANet frozen' if TRAIN_FROM < 0 else f'SEANet from model.{TRAIN_FROM}'})", flush=True)
     mu_c, sd_c = catalog_stats()
     opt = torch.optim.AdamW(params, lr=lr, weight_decay=0.01)
     sched = torch.optim.lr_scheduler.OneCycleLR(opt, max_lr=lr, total_steps=steps, pct_start=0.03)

@@ -1,0 +1,6 @@
+real speakers: train 667 val 12 | voices: train 92 held-out 10 | synthetic utterances 3200
+trainable parameters 26.2M (SEANet frozen)
+val 0: real own 0.6277 wrong 0.6701 | held-out voices (augmented refs) distill own 0.0237 wrong 0.0333
+val 250: real own 0.6167 wrong 0.6606 | held-out voices (augmented refs) distill own 0.0193 wrong 0.0324
+val 500: real own 0.6113 wrong 0.6548 | held-out voices (augmented refs) distill own 0.0186 wrong 0.0323
+val 600: real own 0.6115 wrong 0.6554 | held-out voices (augmented refs) distill own 0.0184 wrong 0.0321

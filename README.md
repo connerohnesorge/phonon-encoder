@@ -107,6 +107,35 @@ acoustic domain.
 
 Raw numbers: `results/`.
 
+## Follow-up: more data (O1) and an unfrozen front end (O2)
+
+Both were tried after the results above and **both made end-to-end cloning worse**, so the
+shipped weights stay the phase-3 encoder.
+
+- **O1**, more data: 667 training speakers instead of 264 (348 more from LibriTTS-R
+  train-clean-360 and 81 more from VCTK, eval speakers excluded), and 3,200 teacher utterances
+  instead of 1,600 (`prep_more.py`, `gen_synth.py`).
+- **O2**, front end unfrozen: the encoder runs on raw audio during training
+  (`train_spk_raw.py`), with the SEANet tail trainable (`model.9` onwards), a fresh random
+  recording channel per synthetic reference, and every reference passed through `refcond.py`,
+  a Python mirror of the runtime's conditioning (it matches Rust within 0.6%).
+- **O1 only** is an ablation: the same training but with SEANet frozen, isolating O1.
+
+Both continued from the phase-3 encoder, with batch 6 and learning rate 5e-5.
+
+| run | steps | ECAPA mean ratio | WavLM | Resemblyzer | ECAPA beats every other voice | passes (ECAPA / WavLM / Resemblyzer) | intelligible (WER ≤ 0.3) |
+|---|---|---|---|---|---|---|---|
+| phase 3 (shipped) | — | **0.28** | **0.90** | **0.76** | 4/8 | 0 / 4 / 3 | **47/48** |
+| O1 + O2 | 1000 | 0.22 | 0.83 | 0.74 | 4/8 | 0 / 3 / 3 | 36/48 |
+| O1 only | 600 | 0.25 | 0.87 | 0.75 | 4/8 | 0 / 4 / 3 | 39/48 |
+
+Teacher-forced validation *improved* in both runs: held-out-voice distillation error fell from
+0.0237 to 0.0190 (O1+O2) and 0.0184 (O1 only), and real-speaker loss from 0.628 to 0.613 and
+0.612 (`results/validation_*.txt`). Free-running generation still got worse, mostly on VCTK
+voices, which fall back into repetition loops. So the teacher-forced objectives stop predicting
+end-to-end quality once the encoder moves further from the phase-3 solution, and unfreezing the
+front end makes that worse. Raw numbers: `results/eval_o1_o2.json`, `results/eval_o1_only.json`.
+
 ## Use
 
 ```sh
