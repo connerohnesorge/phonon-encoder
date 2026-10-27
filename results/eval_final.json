@@ -1,0 +1,248 @@
+{
+ "ecapa": {
+  "vctk_p226": {
+   "ceiling": 0.834408843091556,
+   "floor": 0.07102211378098998,
+   "own": 0.17933416358816126,
+   "ratio": 0.2149236133736465,
+   "best_other": 0.10969799623126164,
+   "best_other_spk": "vctk_p304",
+   "beats_all_others": true,
+   "pass": false
+  },
+  "vctk_p265": {
+   "ceiling": 0.84774378154959,
+   "floor": 0.07083300539151034,
+   "own": 0.18604208497951427,
+   "ratio": 0.2194555584229095,
+   "best_other": 0.229730894168218,
+   "best_other_spk": "ls_121",
+   "beats_all_others": false,
+   "pass": false
+  },
+  "vctk_p294": {
+   "ceiling": 0.8070530146360397,
+   "floor": 0.07486269550697346,
+   "own": 0.28023734005788964,
+   "ratio": 0.34723535502097036,
+   "best_other": 0.18219782070567211,
+   "best_other_spk": "ls_121",
+   "beats_all_others": true,
+   "pass": false
+  },
+  "vctk_p304": {
+   "ceiling": 0.8092801996639797,
+   "floor": 0.08369240334702356,
+   "own": 0.09345911334579189,
+   "ratio": 0.11548424561060179,
+   "best_other": 0.19390267316096774,
+   "best_other_spk": "ls_1089",
+   "beats_all_others": false,
+   "pass": false
+  },
+  "ls_1089": {
+   "ceiling": 0.7695666721888951,
+   "floor": 0.08213664750344053,
+   "own": 0.14617402034734064,
+   "ratio": 0.18994328318763432,
+   "best_other": 0.14876844563211003,
+   "best_other_spk": "ls_237",
+   "beats_all_others": false,
+   "pass": false
+  },
+  "ls_121": {
+   "ceiling": 0.6318264167223658,
+   "floor": 0.08934991307510895,
+   "own": 0.29620855348184705,
+   "ratio": 0.4688131829283827,
+   "best_other": 0.08494128473103046,
+   "best_other_spk": "vctk_p294",
+   "beats_all_others": true,
+   "pass": false
+  },
+  "ls_237": {
+   "ceiling": 0.8135993608406612,
+   "floor": 0.11713731313128457,
+   "own": 0.2453246551255385,
+   "ratio": 0.3015300489814224,
+   "best_other": 0.2615819174485902,
+   "best_other_spk": "vctk_p294",
+   "beats_all_others": false,
+   "pass": false
+  },
+  "lj": {
+   "ceiling": 0.8162505754402706,
+   "floor": 0.06295370651371611,
+   "own": 0.29566597534964484,
+   "ratio": 0.3622245230150901,
+   "best_other": 0.19083808944560587,
+   "best_other_spk": "ls_237",
+   "beats_all_others": true,
+   "pass": false
+  }
+ },
+ "wavlm": {
+  "vctk_p226": {
+   "ceiling": 0.9755803963967732,
+   "floor": 0.6239345490799418,
+   "own": 0.885226355244716,
+   "ratio": 0.9073843206712923,
+   "best_other": 0.8743053873380026,
+   "best_other_spk": "vctk_p304",
+   "beats_all_others": true,
+   "pass": true
+  },
+  "vctk_p265": {
+   "ceiling": 0.9632147529295513,
+   "floor": 0.6218518296788845,
+   "own": 0.8550307117402554,
+   "ratio": 0.8876844017803281,
+   "best_other": 0.780436505873998,
+   "best_other_spk": "vctk_p294",
+   "beats_all_others": true,
+   "pass": true
+  },
+  "vctk_p294": {
+   "ceiling": 0.9697230202811105,
+   "floor": 0.6765889205437686,
+   "own": 0.9101003681619962,
+   "ratio": 0.9385157917548144,
+   "best_other": 0.9113016960521539,
+   "best_other_spk": "lj",
+   "beats_all_others": false,
+   "pass": false
+  },
+  "vctk_p304": {
+   "ceiling": 0.9639032355376652,
+   "floor": 0.5782355106036577,
+   "own": 0.8201289400458336,
+   "ratio": 0.8508415677102336,
+   "best_other": 0.8694139619668325,
+   "best_other_spk": "ls_1089",
+   "beats_all_others": false,
+   "pass": false
+  },
+  "ls_1089": {
+   "ceiling": 0.9705395975283214,
+   "floor": 0.5859653525985777,
+   "own": 0.907496432463328,
+   "ratio": 0.9350431809010722,
+   "best_other": 0.7398094596962134,
+   "best_other_spk": "vctk_p304",
+   "beats_all_others": true,
+   "pass": true
+  },
+  "ls_121": {
+   "ceiling": 0.9245294822113854,
+   "floor": 0.686093826778233,
+   "own": 0.8023292608559132,
+   "ratio": 0.8678244191162178,
+   "best_other": 0.7201770804822445,
+   "best_other_spk": "ls_1089",
+   "beats_all_others": true,
+   "pass": true
+  },
+  "ls_237": {
+   "ceiling": 0.9671424520867211,
+   "floor": 0.6862475691762354,
+   "own": 0.8886575450499853,
+   "ratio": 0.9188486588843292,
+   "best_other": 0.9039433673024178,
+   "best_other_spk": "vctk_p294",
+   "beats_all_others": false,
+   "pass": false
+  },
+  "lj": {
+   "ceiling": 0.9780575994934354,
+   "floor": 0.6928547554250274,
+   "own": 0.8493507504463196,
+   "ratio": 0.8684056551334227,
+   "best_other": 0.8672540026406447,
+   "best_other_spk": "ls_121",
+   "beats_all_others": false,
+   "pass": false
+  }
+ },
+ "resemblyzer": {
+  "vctk_p226": {
+   "ceiling": 0.9114022233656475,
+   "floor": 0.5309036680763322,
+   "own": 0.6569353528320789,
+   "ratio": 0.7207963026534352,
+   "best_other": 0.6316330855091413,
+   "best_other_spk": "vctk_p304",
+   "beats_all_others": true,
+   "pass": false
+  },
+  "vctk_p265": {
+   "ceiling": 0.9162684955767223,
+   "floor": 0.5330298751858729,
+   "own": 0.6367638235290846,
+   "ratio": 0.6949533096500163,
+   "best_other": 0.6304841997722784,
+   "best_other_spk": "vctk_p294",
+   "beats_all_others": true,
+   "pass": false
+  },
+  "vctk_p294": {
+   "ceiling": 0.8332944171769279,
+   "floor": 0.5650983609126082,
+   "own": 0.7354736886918545,
+   "ratio": 0.8826096437601553,
+   "best_other": 0.6668033512930075,
+   "best_other_spk": "ls_237",
+   "beats_all_others": true,
+   "pass": true
+  },
+  "vctk_p304": {
+   "ceiling": 0.89056239596435,
+   "floor": 0.5277418898019407,
+   "own": 0.6328629975517591,
+   "ratio": 0.710632966785511,
+   "best_other": 0.6517147645354271,
+   "best_other_spk": "ls_1089",
+   "beats_all_others": false,
+   "pass": false
+  },
+  "ls_1089": {
+   "ceiling": 0.884710213967732,
+   "floor": 0.5486546995650444,
+   "own": 0.6432840066651503,
+   "ratio": 0.7271126709164598,
+   "best_other": 0.5480508928497633,
+   "best_other_spk": "vctk_p294",
+   "beats_all_others": true,
+   "pass": false
+  },
+  "ls_121": {
+   "ceiling": 0.8318855336734227,
+   "floor": 0.49300307328147547,
+   "own": 0.6599722274889549,
+   "ratio": 0.7933449985296215,
+   "best_other": 0.6101100581387678,
+   "best_other_spk": "vctk_p294",
+   "beats_all_others": true,
+   "pass": true
+  },
+  "ls_237": {
+   "ceiling": 0.9093049828495298,
+   "floor": 0.5698858946561813,
+   "own": 0.7217792769273123,
+   "ratio": 0.7937702866924145,
+   "best_other": 0.6675009839236736,
+   "best_other_spk": "vctk_p294",
+   "beats_all_others": true,
+   "pass": true
+  },
+  "lj": {
+   "ceiling": 0.9297148542744773,
+   "floor": 0.5151101809128055,
+   "own": 0.6793017648160458,
+   "ratio": 0.7306560303870301,
+   "best_other": 0.6344743023316065,
+   "best_other_spk": "vctk_p294",
+   "beats_all_others": true,
+   "pass": false
+  }
+ }
+}

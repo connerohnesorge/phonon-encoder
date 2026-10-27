@@ -1,0 +1,120 @@
+diff --git a/ptts/examples/create_voice.rs b/ptts/examples/create_voice.rs
+index 9638cba..062088d 100644
+--- a/ptts/examples/create_voice.rs
++++ b/ptts/examples/create_voice.rs
+@@ -94,7 +94,8 @@ fn load_voice_audio(
+     dev: &xn::CpuDevice,
+ ) -> Result<Tensor<f32, xn::CpuDevice>> {
+     let speaker_sr = cfg.speaker_mimi_cfg().sample_rate;
+-    let (mut pcm, sample_rate) = ptts::audio::decode_file(std::path::Path::new(path))?;
++    let (pcm, sample_rate) = ptts::audio::decode_file(std::path::Path::new(path))?;
++    let mut pcm = ptts::utils::condense_speech(&pcm, sample_rate);
+     ptts::utils::normalize_loudness(&mut pcm, sample_rate)?;
+     // Unconditional: `resample` hands the buffer back untouched when the rates
+     // already match.
+diff --git a/ptts/src/synth.rs b/ptts/src/synth.rs
+index d642b64..ac18c65 100644
+--- a/ptts/src/synth.rs
++++ b/ptts/src/synth.rs
+@@ -592,6 +592,7 @@ impl<Q: BackendQ> SynthApi for SynthOf<Q> {
+             }
+         };
+         let sr = self.voice_prompt_sample_rate();
++        let pcm = crate::utils::condense_speech(pcm, sr);
+         let min_len = (sr as f32 * self.cfg.audio_prompt_min_duration).round() as usize;
+         let max_len = (sr as f32 * self.cfg.audio_prompt_max_duration).round() as usize;
+         if pcm.len() < min_len {
+diff --git a/ptts/src/utils.rs b/ptts/src/utils.rs
+index 33a4a6b..dc73894 100644
+--- a/ptts/src/utils.rs
++++ b/ptts/src/utils.rs
+@@ -50,3 +50,89 @@ pub fn normalize_loudness(pcm: &mut [f32], sample_rate: u32) -> Result<()> {
+     }
+     Ok(())
+ }
++
++/// High-pass cutoff of [`condense_speech`], in Hz: below the voice, where room rumble and
++/// handling noise sit.
++pub const SPEECH_HIGHPASS_HZ: f32 = 80.0;
++/// Frames more than this many dB below the loud end of the recording count as silence.
++pub const SILENCE_BELOW_DB: f32 = 30.0;
++/// Audio kept on each side of speech when silence is cut, in seconds.
++pub const SPEECH_MARGIN_S: f32 = 0.15;
++
++/// Conditions a reference recording for the speaker encoder: high-passes it at
++/// [`SPEECH_HIGHPASS_HZ`] and cuts the pauses, keeping [`SPEECH_MARGIN_S`] around speech.
++///
++/// The encoder is trained on continuous speech. Long pauses and low-frequency rumble, as in
++/// corpora recorded sentence by sentence, put its latents where the model loses the text and
++/// repeats itself. Silence is judged in 10 ms frames against the 99th-percentile frame energy. A
++/// recording that would keep less than half a second is returned only high-passed.
++pub fn condense_speech(pcm: &[f32], sample_rate: u32) -> Vec<f32> {
++    // Second-order Butterworth high-pass (RBJ biquad, Q = 1/sqrt(2)), direct form II transposed.
++    let w0 = 2.0 * std::f64::consts::PI * SPEECH_HIGHPASS_HZ as f64 / sample_rate as f64;
++    let alpha = w0.sin() / std::f64::consts::SQRT_2;
++    let (cos, a0) = (w0.cos(), 1.0 + w0.sin() / std::f64::consts::SQRT_2);
++    let b = [(1.0 + cos) / 2.0 / a0, -(1.0 + cos) / a0, (1.0 + cos) / 2.0 / a0];
++    let a = [-2.0 * cos / a0, (1.0 - alpha) / a0];
++    let (mut z1, mut z2) = (0f64, 0f64);
++    let filtered: Vec<f32> = pcm
++        .iter()
++        .map(|&x| {
++            let x = x as f64;
++            let y = b[0] * x + z1;
++            z1 = b[1] * x - a[0] * y + z2;
++            z2 = b[2] * x - a[1] * y;
++            y as f32
++        })
++        .collect();
++
++    let frame = (sample_rate / 100) as usize;
++    let n_frames = filtered.len() / frame;
++    if n_frames == 0 {
++        return filtered;
++    }
++    let energy: Vec<f32> = filtered
++        .chunks_exact(frame)
++        .map(|f| 10.0 * (f.iter().map(|s| s * s).sum::<f32>() / frame as f32 + 1e-12).log10())
++        .collect();
++    let mut sorted = energy.clone();
++    sorted.sort_by(f32::total_cmp);
++    let loud = sorted[((n_frames - 1) as f32 * 0.99).round() as usize];
++    let margin = (SPEECH_MARGIN_S * 100.0).round() as usize;
++    let mut keep = vec![false; n_frames];
++    for (i, &e) in energy.iter().enumerate() {
++        if e > loud - SILENCE_BELOW_DB {
++            keep[i.saturating_sub(margin)..(i + margin + 1).min(n_frames)].fill(true);
++        }
++    }
++    let kept: Vec<f32> = filtered
++        .chunks_exact(frame)
++        .zip(&keep)
++        .filter(|(_, k)| **k)
++        .flat_map(|(f, _)| f.iter().copied())
++        .collect();
++    if kept.len() < sample_rate as usize / 2 { filtered } else { kept }
++}
++
++#[cfg(test)]
++mod tests {
++    use super::*;
++
++    #[test]
++    fn condense_speech_cuts_pauses_and_keeps_speech() {
++        let sr = 24000;
++        let tone = |n: usize| (0..n).map(|i| (i as f32 * 0.05).sin() * 0.3).collect::<Vec<_>>();
++        // 1 s of tone, 2 s of silence, 1 s of tone.
++        let mut pcm = tone(sr);
++        pcm.extend(vec![0.0; 2 * sr]);
++        pcm.extend(tone(sr));
++        let out = condense_speech(&pcm, sr as u32);
++        let margin = 2 * (SPEECH_MARGIN_S * sr as f32) as usize;
++        assert!(out.len() >= 2 * sr && out.len() <= 2 * sr + margin + sr / 50, "{}", out.len());
++    }
++
++    #[test]
++    fn condense_speech_keeps_silence_only_input() {
++        let out = condense_speech(&vec![0.0; 24000], 24000);
++        assert_eq!(out.len(), 24000);
++    }
++}

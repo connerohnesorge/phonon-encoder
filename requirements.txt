@@ -1,0 +1,13 @@
+torch>=2.6
+torchaudio
+transformers>=5.21
+safetensors
+numpy
+scipy
+soundfile
+librosa
+pyloudnorm
+pyarrow
+speechbrain
+resemblyzer
+setuptools<81

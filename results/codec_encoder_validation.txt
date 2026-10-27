@@ -1,0 +1,4 @@
+eval 250: synth R2 0.856 real mel 0.711
+eval 500: synth R2 0.921 real mel 0.615
+eval 750: synth R2 0.936 real mel 0.569
+eval 1000: synth R2 0.939 real mel 0.559

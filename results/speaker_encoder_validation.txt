@@ -1,0 +1,23 @@
+/home/user/work/spk.log:train speakers 264 val speakers 12
+/home/user/work/spk.log:val loss: catalog voice 1.3063
+/home/user/work/spk.log:val 250: own 0.6742 wrong 0.7184
+/home/user/work/spk.log:val 500: own 0.6464 wrong 0.7077
+/home/user/work/spk.log:val 750: own 0.6307 wrong 0.7034
+/home/user/work/spk.log:val 1000: own 0.6225 wrong 0.7000
+/home/user/work/spk2.log:train speakers 264 val speakers 12
+/home/user/work/spk2.log:synthetic voices: train 92 held-out 10
+/home/user/work/spk2.log:val 0: own 0.6225 wrong 0.7000 | held-out voices distill: own 0.1217 wrong 0.1303
+/home/user/work/spk2.log:val 250: own 0.6263 wrong 0.7028 | held-out voices distill: own 0.0266 wrong 0.0421
+/home/user/work/spk2.log:val 500: own 0.6213 wrong 0.7010 | held-out voices distill: own 0.0238 wrong 0.0432
+/home/user/work/spk2.log:val 750: own 0.6185 wrong 0.6993 | held-out voices distill: own 0.0205 wrong 0.0386
+/home/user/work/spk2.log:val 1000: own 0.6149 wrong 0.6974 | held-out voices distill: own 0.0200 wrong 0.0394
+/home/user/work/spk2.log:val 1250: own 0.6127 wrong 0.6940 | held-out voices distill: own 0.0199 wrong 0.0399
+/home/user/work/spk3.log:train speakers 264 val speakers 12
+/home/user/work/spk3.log:synthetic voices: train 92 held-out 10
+/home/user/work/spk3.log:val 0: own 0.6127 wrong 0.6940 | held-out voices distill: own 0.0266 wrong 0.0451
+/home/user/work/spk3.log:val 250: own 0.6152 wrong 0.6994 | held-out voices distill: own 0.0213 wrong 0.0375
+/home/user/work/spk3.log:val 500: own 0.6141 wrong 0.6944 | held-out voices distill: own 0.0201 wrong 0.0383
+/home/user/work/spk3.log:val 750: own 0.6119 wrong 0.6940 | held-out voices distill: own 0.0191 wrong 0.0371
+/home/user/work/spk3.log:val 1000: own 0.6089 wrong 0.6933 | held-out voices distill: own 0.0184 wrong 0.0374
+/home/user/work/spk3.log:val 1250: own 0.6070 wrong 0.6948 | held-out voices distill: own 0.0181 wrong 0.0379
+/home/user/work/spk3.log:val 1500: own 0.6065 wrong 0.6939 | held-out voices distill: own 0.0179 wrong 0.0375

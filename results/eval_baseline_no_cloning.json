@@ -1,0 +1,248 @@
+{
+ "ecapa": {
+  "vctk_p226": {
+   "ceiling": 0.834408843091556,
+   "floor": 0.07102211378098998,
+   "own": 0.16940839340289435,
+   "ratio": 0.2030280417154039,
+   "best_other": 0.20416179237266383,
+   "best_other_spk": "ls_1089",
+   "beats_all_others": false,
+   "pass": false
+  },
+  "vctk_p265": {
+   "ceiling": 0.84774378154959,
+   "floor": 0.07083300539151034,
+   "own": -0.02145457937149331,
+   "ratio": -0.02530785815058001,
+   "best_other": 0.20416169986128807,
+   "best_other_spk": "ls_1089",
+   "beats_all_others": false,
+   "pass": false
+  },
+  "vctk_p294": {
+   "ceiling": 0.8070530146360397,
+   "floor": 0.07486269550697346,
+   "own": 0.10306529964630802,
+   "ratio": 0.1277057365218911,
+   "best_other": 0.20415846444666386,
+   "best_other_spk": "ls_1089",
+   "beats_all_others": false,
+   "pass": false
+  },
+  "vctk_p304": {
+   "ceiling": 0.8092801996639797,
+   "floor": 0.08369240334702356,
+   "own": 0.06391108435733865,
+   "ratio": 0.07897275181559502,
+   "best_other": 0.2041622477894028,
+   "best_other_spk": "ls_1089",
+   "beats_all_others": false,
+   "pass": false
+  },
+  "ls_1089": {
+   "ceiling": 0.7695666721888951,
+   "floor": 0.08213664750344053,
+   "own": 0.20416650734841824,
+   "ratio": 0.26530060971546887,
+   "best_other": 0.16940487052003542,
+   "best_other_spk": "vctk_p226",
+   "beats_all_others": true,
+   "pass": false
+  },
+  "ls_121": {
+   "ceiling": 0.6318264167223658,
+   "floor": 0.08934991307510895,
+   "own": 0.03983923268970102,
+   "ratio": 0.06305407883445144,
+   "best_other": 0.20416700188070536,
+   "best_other_spk": "ls_1089",
+   "beats_all_others": false,
+   "pass": false
+  },
+  "ls_237": {
+   "ceiling": 0.8135993608406612,
+   "floor": 0.11713731313128457,
+   "own": 0.04859322930375735,
+   "ratio": 0.059726238296878474,
+   "best_other": 0.204166315185527,
+   "best_other_spk": "ls_1089",
+   "beats_all_others": false,
+   "pass": false
+  },
+  "lj": {
+   "ceiling": 0.8162505754402706,
+   "floor": 0.06295370651371611,
+   "own": 0.14560950353431204,
+   "ratio": 0.1783882399786033,
+   "best_other": 0.20416254239777723,
+   "best_other_spk": "ls_1089",
+   "beats_all_others": false,
+   "pass": false
+  }
+ },
+ "wavlm": {
+  "vctk_p226": {
+   "ceiling": 0.9755803963967732,
+   "floor": 0.6239345490799418,
+   "own": 0.8490560812254747,
+   "ratio": 0.8703086740584315,
+   "best_other": 0.7269691725571951,
+   "best_other_spk": "ls_121",
+   "beats_all_others": true,
+   "pass": true
+  },
+  "vctk_p265": {
+   "ceiling": 0.9632147529295513,
+   "floor": 0.6218518296788845,
+   "own": 0.6086357546349367,
+   "ratio": 0.6318796019099718,
+   "best_other": 0.8490575266381105,
+   "best_other_spk": "vctk_p226",
+   "beats_all_others": false,
+   "pass": false
+  },
+  "vctk_p294": {
+   "ceiling": 0.9697230202811105,
+   "floor": 0.6765889205437686,
+   "own": 0.6871517859399319,
+   "ratio": 0.7086062427812998,
+   "best_other": 0.8490572807689508,
+   "best_other_spk": "vctk_p226",
+   "beats_all_others": false,
+   "pass": false
+  },
+  "vctk_p304": {
+   "ceiling": 0.9639032355376652,
+   "floor": 0.5782355106036577,
+   "own": 0.6941109697024027,
+   "ratio": 0.7201044089402061,
+   "best_other": 0.8490557285646597,
+   "best_other_spk": "vctk_p226",
+   "beats_all_others": false,
+   "pass": false
+  },
+  "ls_1089": {
+   "ceiling": 0.9705395975283214,
+   "floor": 0.5859653525985777,
+   "own": 0.6382785340150198,
+   "ratio": 0.6576532638550011,
+   "best_other": 0.8490581388274828,
+   "best_other_spk": "vctk_p226",
+   "beats_all_others": false,
+   "pass": false
+  },
+  "ls_121": {
+   "ceiling": 0.9245294822113854,
+   "floor": 0.686093826778233,
+   "own": 0.7269687230388323,
+   "ratio": 0.7863121047259555,
+   "best_other": 0.8490552976727486,
+   "best_other_spk": "vctk_p226",
+   "beats_all_others": false,
+   "pass": false
+  },
+  "ls_237": {
+   "ceiling": 0.9671424520867211,
+   "floor": 0.6862475691762354,
+   "own": 0.6269622842470804,
+   "ratio": 0.6482626038122277,
+   "best_other": 0.8490599257250627,
+   "best_other_spk": "vctk_p226",
+   "beats_all_others": false,
+   "pass": false
+  },
+  "lj": {
+   "ceiling": 0.9780575994934354,
+   "floor": 0.6928547554250274,
+   "own": 0.6568987804154555,
+   "ratio": 0.6716360884631769,
+   "best_other": 0.8490558837850889,
+   "best_other_spk": "vctk_p226",
+   "beats_all_others": false,
+   "pass": false
+  }
+ },
+ "resemblyzer": {
+  "vctk_p226": {
+   "ceiling": 0.9114022233656475,
+   "floor": 0.5309036680763322,
+   "own": 0.6338080155352751,
+   "ratio": 0.6954207475978432,
+   "best_other": 0.6560897839566072,
+   "best_other_spk": "ls_1089",
+   "beats_all_others": false,
+   "pass": false
+  },
+  "vctk_p265": {
+   "ceiling": 0.9162684955767223,
+   "floor": 0.5330298751858729,
+   "own": 0.46774356439709663,
+   "ratio": 0.5104874462617938,
+   "best_other": 0.656089786440134,
+   "best_other_spk": "ls_1089",
+   "beats_all_others": false,
+   "pass": false
+  },
+  "vctk_p294": {
+   "ceiling": 0.8332944171769279,
+   "floor": 0.5650983609126082,
+   "own": 0.5925450858970484,
+   "ratio": 0.7110873104184462,
+   "best_other": 0.6560896088679632,
+   "best_other_spk": "ls_1089",
+   "beats_all_others": false,
+   "pass": false
+  },
+  "vctk_p304": {
+   "ceiling": 0.89056239596435,
+   "floor": 0.5277418898019407,
+   "own": 0.57673221702377,
+   "ratio": 0.6476045020958386,
+   "best_other": 0.6560897814730803,
+   "best_other_spk": "ls_1089",
+   "beats_all_others": false,
+   "pass": false
+  },
+  "ls_1089": {
+   "ceiling": 0.884710213967732,
+   "floor": 0.5486546995650444,
+   "own": 0.656089815000693,
+   "ratio": 0.741587250426638,
+   "best_other": 0.6338079733153185,
+   "best_other_spk": "vctk_p226",
+   "beats_all_others": true,
+   "pass": false
+  },
+  "ls_121": {
+   "ceiling": 0.8318855336734227,
+   "floor": 0.49300307328147547,
+   "own": 0.5352677951256434,
+   "ratio": 0.643439239485292,
+   "best_other": 0.65608977774779,
+   "best_other_spk": "ls_1089",
+   "beats_all_others": false,
+   "pass": false
+  },
+  "ls_237": {
+   "ceiling": 0.9093049828495298,
+   "floor": 0.5698858946561813,
+   "own": 0.5563974734395742,
+   "ratio": 0.6118931314947451,
+   "best_other": 0.6560897715389729,
+   "best_other_spk": "ls_1089",
+   "beats_all_others": false,
+   "pass": false
+  },
+  "lj": {
+   "ceiling": 0.9297148542744773,
+   "floor": 0.5151101809128055,
+   "own": 0.5249468895296255,
+   "ratio": 0.5646321419047122,
+   "best_other": 0.6560896870990595,
+   "best_other_spk": "ls_1089",
+   "beats_all_others": false,
+   "pass": false
+  }
+ }
+}

@@ -1,0 +1,53 @@
+Loading weights:   0%|          | 0/245 [00:00<?, ?it/s]Loading weights:  55%|█████▌    | 135/245 [00:00<00:00, 1339.01it/s]Loading weights: 100%|██████████| 245/245 [00:00<00:00, 1771.51it/s]
+[transformers] Using custom `forced_decoder_ids` from the (generation) config. This is deprecated in favor of the `task` and `language` flags/config options.
+[transformers] Passing `generation_config` together with generation-related arguments=({'suppress_tokens', 'begin_suppress_tokens'}) is deprecated and will be removed in future versions. Please pass either a `generation_config` object OR all generation parameters explicitly, but not both.
+[transformers] Ignoring clean_up_tokenization_spaces=True for BPE tokenizer WhisperTokenizer. The clean_up_tokenization post-processing step is designed for WordPiece tokenizers and is destructive for BPE (it strips spaces before punctuation). Set clean_up_tokenization_spaces=False to suppress this warning, or set clean_up_tokenization_spaces_for_bpe_even_though_it_will_corrupt_output=True to force cleanup anyway.
+lj_clone0.wav  WER 0.19  The birch can no slit on the smooth planks and the boat drifted toward the far shore.
+lj_clone1.wav  WER 0.00  Glue the sheet to the dark blue background before the paint begins to dry.
+lj_clone2.wav  WER 0.00  It is easy to tell the depth of a well when you drop a stone into it.
+lj_clone3.wav  WER 0.00  These days a chicken leg is a rare dish but the soup was warm and filling.
+lj_clone4.wav  WER 0.00  The juice of lemons makes fine punch, especially on a hot afternoon in July.
+lj_clone5.wav  WER 0.00  Four hours of steady work faced us, so we started early and kept a quiet pace.
+ls_1089_clone0.wav  WER 0.00  The birch canoe slid on the smooth planks and the boat drifted toward the far shore.
+ls_1089_clone1.wav  WER 0.00  Glue the sheet to the dark blue background before the paint begins to dry.
+ls_1089_clone2.wav  WER 0.00  It is easy to tell the depth of a well when you drop a stone into it.
+ls_1089_clone3.wav  WER 0.00  These days a chicken leg is a rare dish, but the soup was warm and filling.
+ls_1089_clone4.wav  WER 0.00  The juice of lemons makes fine punch, especially on a hot afternoon in July.
+ls_1089_clone5.wav  WER 0.06  four hours of steady work faced us, so we started early and kept the quiet pace.
+ls_121_clone0.wav  WER 0.25  The bird can now slit on the smooth planks and the boat drifted toward the far shore.
+ls_121_clone1.wav  WER 0.07  Lue the sheet to the dark blue background before the paint begins to dry.
+ls_121_clone2.wav  WER 0.00  It is easy to tell the depth of a well when you drop a stone into it.
+ls_121_clone3.wav  WER 0.00  These days a chicken leg is a rare dish, but the soup was warm and filling.
+ls_121_clone4.wav  WER 0.00  The juice of lemons makes fine punch, especially on a hot afternoon in July.
+ls_121_clone5.wav  WER 0.00  four hours of steady work faced us, so we started early and kept a quiet pace.
+ls_237_clone0.wav  WER 0.00  The birch canoe slid on the smooth planks and the boat drifted toward the far shore.
+ls_237_clone1.wav  WER 0.00  Glue the sheet to the dark blue background before the paint begins to dry.
+ls_237_clone2.wav  WER 0.00  It is easy to tell the depth of a well when you drop a stone into it.
+ls_237_clone3.wav  WER 0.00  These days a chicken leg is a rare dish, but the soup was warm and filling.
+ls_237_clone4.wav  WER 0.00  The juice of lemons makes fine punch, especially on a hot afternoon in July.
+ls_237_clone5.wav  WER 0.00  four hours of steady work faced us, so we started early and kept a quiet pace.
+vctk_p226_clone0.wav  WER 0.12  The birch can now slid on the smooth planks and the boat drifted toward the far shore.
+vctk_p226_clone1.wav  WER 0.07  Grew the sheet to the dark blue background before the paint begins to dry.
+vctk_p226_clone2.wav  WER 0.00  It is easy to tell the depth of a well when you drop a stone into it.
+vctk_p226_clone3.wav  WER 0.00  These days a chicken leg is a rare dish, but the soup was warm and filling.
+vctk_p226_clone4.wav  WER 0.00  The juice of lemons makes fine punch, especially on a hot afternoon in July.
+vctk_p226_clone5.wav  WER 0.00  four hours of steady work faced us, so we started early and kept a quiet pace.
+vctk_p265_clone0.wav  WER 0.19  The birch can now slit on the smooth planks and the boat drifted toward the far shore.
+vctk_p265_clone1.wav  WER 0.29  Luleth, initiate to the dark blue background, for the paint begins to dry.
+vctk_p265_clone2.wav  WER 0.00  It is easy to tell the depth of a well when you drop a stone into it.
+vctk_p265_clone3.wav  WER 0.19  A thazed chicken leg is a rare dish, but the soup was warm and filling.
+vctk_p265_clone4.wav  WER 0.07  The juice of lemons makes fine punch, especially on a hot afternoon in June.
+vctk_p265_clone5.wav  WER 0.00  four hours of steady work faced us. So we started early and kept a quiet pace.
+vctk_p294_clone0.wav  WER 0.12  The burnt cano slid on the smooth planks, and the boat drifted toward the far shore.
+vctk_p294_clone1.wav  WER 0.00  glue the sheet to the dark blue background before the paint begins to dry.
+vctk_p294_clone2.wav  WER 0.00  It is easy to tell the depth of a well when you drop a stone into it.
+vctk_p294_clone3.wav  WER 0.06  These days the chicken leg is a rare dish, but the soup was warm and filling.
+vctk_p294_clone4.wav  WER 0.00  The juice of lemons makes fine punch, especially on a hot afternoon in July.
+vctk_p294_clone5.wav  WER 0.00  four hours of steady work faced us. So we started early and kept a quiet pace.
+vctk_p304_clone0.wav  WER 0.25  The birch can now slit on the smooth plaques and the boat drifted toward the far shore.
+vctk_p304_clone1.wav  WER 0.07  Lue the sheet to the dark blue background before the paint begins to dry.
+vctk_p304_clone2.wav  WER 0.00  It is easy to tell the depth of a well when you drop a stone into it.
+vctk_p304_clone3.wav  WER 9.31  Ee, ee, ee, ee, ee, ee, ee, ee, ee, ee, ee, ee, ee, ee, ee, ee, ee, ee, ee, ee, ee, ee, ee, ee, ee, ee, ee, ee, ee, ee, ee, ee, ee, ee, ee, ee, ee, ee, ee, ee, ee, ee, ee, ee, ee, ee, ee, ee, ee, ee, ee, ee, ee, ee, ee, ee, ee, ee, ee, ee, ee, ee, ee, ee, ee, ee, ee, ee, ee, ee, ee, ee, ee, ee, ee, ee, ee, ee, ee, ee, ee, ee, ee, ee, ee, ee, ee, ee, ee, ee, ee, ee, ee, ee, ee, ee, ee, ee, ee, ee, ee, ee, ee, ee, ee, ee, ee, ee, ee, ee, ee, ee, ee, ee, ee, ee, ee, ee, ee, ee, ee, ee, ee, ee, ee, ee, ee, ee, ee, ee, ee, ee, ee, ee, ee, ee, ee, ee, ee, ee, ee, ee, ee, ee, ee, ee, ee, ee, ee
+vctk_p304_clone4.wav  WER 0.00  The juice of lemons makes fine punch, especially on a hot afternoon in July.
+vctk_p304_clone5.wav  WER 0.00  four hours of steady work faced us, so we started early and kept a quiet pace.
+mean WER 0.236 over 48 clips
