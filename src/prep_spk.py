@@ -29,7 +29,7 @@ def loud(a, target, meter):
 
 def main(what, shard, nshards):
     torch.set_num_threads(int(os.environ.get("THREADS", "1")))
-    meta = [json.loads(l) for l in open(f"{W}/audio/meta.jsonl")]
+    meta = [json.loads(l) for l in open(f"{W}/audio/{os.environ.get('META', 'meta.jsonl')}")]
     meta = [m for m in meta if m["split"] == "train"]
     # at most MAX_PER_SPK utterances per speaker, the same ones for `feat` and `z`
     cap, seen, kept = int(os.environ.get("MAX_PER_SPK", "25")), {}, []
@@ -53,7 +53,8 @@ def main(what, shard, nshards):
     os.makedirs(f"{W}/cache", exist_ok=True)
     with torch.no_grad():
         for c in range(0, len(meta), 500):
-            path = f"{W}/cache/{what}_{shard}_{c // 500:03d}.npy"
+            # TAG keeps the chunks of another metadata file apart (still matched by `{what}_[0-9]*`)
+            path = f"{W}/cache/{what}_{os.environ.get('TAG', '')}{shard}_{c // 500:03d}.npy"
             if os.path.exists(path):
                 continue
             out = {}
