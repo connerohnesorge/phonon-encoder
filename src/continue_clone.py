@@ -19,7 +19,7 @@ import torch
 from transformers import AutoProcessor, GradiumPhononTTSForConditionalGeneration, pipeline
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from adapt_voice import MODELS, REFINE_STEPS, SR, refine
+from adapt_voice import MODELS, REFINE_STEPS, SR, asr_words, refine
 from eval_clone import EVAL, TEXTS, speaker_sets, write_ref
 from lmprior import LAM as LM_PRIOR, refine_lm
 from prep_spk import loud
@@ -36,8 +36,7 @@ FRAMES_AFTER_EOS = 2
 
 def prefix_from_reference(a, asr, emain, meter, lm=None):
     """(transcript, normalised-space-ready codec latents) of the reference's last ~PREFIX_S of speech."""
-    words = [w for w in asr(librosa.resample(a, orig_sr=SR, target_sr=16000), return_timestamps="word")["chunks"]
-             if w["timestamp"][1] is not None]
+    words = asr_words(asr, a)
     end = words[-1]["timestamp"][1]
     start_i = len(words) - 1
     while start_i > 0 and end - words[start_i - 1]["timestamp"][0] <= PREFIX_S:

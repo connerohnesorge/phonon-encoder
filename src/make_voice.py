@@ -21,7 +21,8 @@ from transformers import AutoProcessor, GradiumPhononTTSForConditionalGeneration
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 # the adaptation settings that scored best (adapt_voice reads them at import)
-for k, v in (("MODE", "full"), ("STEPS", "300"), ("ADAPT_LR", "0.01"), ("L2", "0.1")):
+for k, v in (("MODE", "full"), ("STEPS", "300"), ("ADAPT_LR", "0.01"), ("L2", "0.1"), ("LM_PRIOR", "0.3"),
+             ("LM_PRIOR_STEPS", "300")):
     os.environ.setdefault(k, v)
 from adapt_voice import MODELS, SR, adapt
 from continue_clone import prefix_from_reference
@@ -48,6 +49,8 @@ def main():
         a = a.mean(1) if a.ndim > 1 else a
         a = librosa.resample(a, orig_sr=sr, target_sr=SR) if sr != SR else a
         name = os.path.basename(ref).replace("_ref.wav", "").replace(".wav", "")
+        if os.path.exists(f"{out_dir}/{name}.safetensors"):
+            continue  # already made (resumable)
         prompt, _ = adapt(a, enc, emain, asr, proc, model, meter)
         text, z = prefix_from_reference(a, asr, emain, meter, lm=(model, proc, prompt))
         save_file(

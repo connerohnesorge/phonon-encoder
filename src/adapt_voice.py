@@ -65,9 +65,27 @@ def refine(z, x):
     return zz.detach()[0].numpy()
 
 
+MAX_WORD_S = 2.0
+
+
+def asr_words(asr, a):
+    """Whisper word timestamps, each span capped at MAX_WORD_S: Whisper can stretch a word over
+    following silence or untranscribed speech (e.g. a repeated take), which would otherwise pair
+    seconds of audio with one word."""
+    out = []
+    for w in asr(librosa.resample(a, orig_sr=SR, target_sr=16000), return_timestamps="word")["chunks"]:
+        t0, t1 = w["timestamp"]
+        if t1 is None:
+            continue
+        if t1 - t0 > MAX_WORD_S:
+            # a stretched first word usually carries leading silence, any other one trailing audio
+            t0, t1 = (t1 - MAX_WORD_S, t1) if not out else (t0, t0 + MAX_WORD_S)
+        out.append({**w, "timestamp": (t0, t1)})
+    return out
+
+
 def phrases(a, asr, meter, emain, keep_audio=False):
-    a16 = librosa.resample(a, orig_sr=SR, target_sr=16000)
-    words = [w for w in asr(a16, return_timestamps="word")["chunks"] if w["timestamp"][1] is not None]
+    words = asr_words(asr, a)
     segs, cur = [], []
     for w in words:
         cur.append(w)

@@ -1,0 +1,33 @@
+Where speaker identity is lost (phonon-40m-en, ECAPA cosine to held-out real recordings / real ceiling).
+3 held-out utterances per voice; "tf" = one-step LM predictions teacher-forced on the given latents.
+
+Codec-encoder stand-in resynthesis, 8 voices (decoder_bound.py, 0 steps):
+  p226 0.74  p265 0.65  p294 0.61  p304 0.57  ls_1089 0.55  ls_121 0.79  ls_237 0.59  lj 0.62  (mean 0.64)
+Decoder-optimised latents (mel inversion, 300 steps): p226 0.91  p265 0.84  p294 0.79
+
+In-domain control (31m, released catalog voices, true latents; diag_syn.py, 5 voices):
+  resynth 0.98   tf 0.95   -> the LM keeps identity when latents and prompt are in its domain
+
+Real speech, adapted 10 s prompt (diag_tf.py):            resynth   tf     free
+  p294                                                      0.64     0.67   0.63
+  ls_121                                                    0.80     0.54   0.51
+  ls_121, prompt fitted on the test utterances (oracle)     0.80     0.67   0.64
+
+Reference latents refined for mel + LAM x LM flow loss (diag_lmprior.py):
+                      LAM   resynth   tf     LM flow loss
+  p294                0     0.80      0.65   1.43
+  p294                0.1   0.78      0.73
+  p294                0.3   0.75      0.74   0.36
+  p294                1     0.71      0.71   0.21
+  ls_121              0     0.92      0.60   1.36
+  ls_121              0.3   0.86      0.70
+  ls_121, stage-2 prompt  0.3  0.87   0.73
+  ls_121              1     0.78      0.70   0.21
+
+Negative results (end-to-end or tf, p294 / ls_121 screen):
+  speaker CFG (null = no prompt), w 1.5/2/3      tf 0.43-0.13 (worse at every w > 1)
+  temperature 0 in free generation               ECAPA 0.47 / 0.47, WER 1.23 (degenerate)
+  10 s continuation prefix instead of 4 s        ECAPA 0.61 / 0.58, WER 0.16
+  per-speaker LM fine-tuning on the 10 s ref     memorises (flow 0.008), held-out tf unchanged
+  30 s reference (LM prior 0.3)                  ECAPA 0.52 / 0.69, WER 0.15
+  seed reranking                                 per-text seed spread 0.34-0.42 (too small)

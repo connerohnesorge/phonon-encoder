@@ -136,6 +136,54 @@ voices, which fall back into repetition loops. So the teacher-forced objectives 
 end-to-end quality once the encoder moves further from the phase-3 solution, and unfreezing the
 front end makes that worse. Raw numbers: `results/eval_o1_o2.json`, `results/eval_o1_only.json`.
 
+## Reference-based cloning on phonon-40m-en
+
+The second approach keeps Phonon frozen and spends a few minutes per voice on the reference
+recording itself (`src/make_voice.py`, raw audio only, no speaker-verification model):
+
+1. **Prompt adaptation** (`adapt_voice.py`). Whisper cuts the reference into 2-4 s phrases with
+   word timestamps. The speaker encoder's prompt is then fitted so that the frozen LM best
+   predicts those phrases' codec latents (its flow-matching loss, teacher-forced).
+2. **Faithful, LM-likely latents** (`lmprior.py`). The codec-encoder stand-in's latents for
+   real speech decode to only 0.55-0.79 of the ECAPA ceiling. Latents optimised for the decoder
+   alone reach 0.79-0.92, but the LM finds them unlikely (flow loss 1.4 against 0.2-0.4) and pulls
+   generation back to a generic voice. Each phrase's latents therefore minimise
+   `mel(decoder(z), x) + 0.3 x LM flow loss(z)`, and the prompt is re-fitted on them.
+3. **Continuation** (`continue_clone.py`, as in VALL-E). The last ~4 s of the reference, as
+   refined latents with their transcript, are teacher-forced as the start of every utterance
+   before the new text is generated. `patches/xn-ptts-continuation.patch` adds this to the Rust
+   runtime: a voice file may carry `prefix_latents` and a `prefix_text` metadata key, and the
+   prefix is never decoded to output. Rust and PyTorch agree (ECAPA 0.62 / 0.53 against
+   0.64 / 0.50 on the screen voices).
+
+### Result, 8 held-out voices (10 s raw reference, Rust runtime, `results/eval_lp_all.json`)
+
+| verifier | passes | ratio to ceiling | beats every other voice |
+|---|---|---|---|
+| ECAPA | **0/8** | 0.38-0.63 (mean 0.51; speaker encoder alone: 0.28) | 8/8 |
+| WavLM-SV | **8/8** | 0.86-0.96 | 8/8 |
+| Resemblyzer | **8/8** | 0.79-0.92 | 8/8 |
+
+Mean WER is 0.087 over 48 clips. VCTK held-out sets hold both microphone copies of each take.
+Dropping those same-take pairs from the ceiling moves it by at most 0.017 and changes no
+verdict (`results/ceiling_takes_lp_all.txt`).
+
+### Why ECAPA stays below 0.75 (`results/diagnostics_40m.txt`)
+
+- **The LM is not the limit in its own domain.** On released catalog voices with true latents,
+  teacher-forced predictions keep 0.95 of resynthesis identity.
+- **Real speech is out of that domain.** With codec-encoder latents, the LM keeps less (ls_121:
+  resynthesis 0.80, teacher-forced 0.54). Even a prompt fitted on the test utterances themselves
+  only reaches 0.67.
+- **The LM prior closes most of that gap but costs fidelity.** Teacher-forced identity tops out
+  at 0.73-0.74 for any prior weight, and free generation loses another ~0.1.
+- **Encoder-side levers are exhausted.** Speaker CFG, temperature 0, longer prefixes or
+  references, seed reranking and per-speaker LM fine-tuning were all neutral or worse.
+
+Passing ECAPA would need the LM to model real-speech latents that decode at ≥ 0.85 of the
+ceiling. That means a real-speech codec encoder much closer to Phonon's unreleased one, and a
+fine-tuned flow LM. Both are GPU-scale training jobs.
+
 ## Use
 
 ```sh
@@ -144,6 +192,11 @@ front end makes that worse. Raw numbers: `results/eval_o1_o2.json`, `results/eva
 python src/export_speaker.py weights/speaker_encoder_head.fp16.safetensors ckpt
 # xn-ptts with patches/xn-ptts-condense-speech.patch applied
 ptts --model ckpt --lang en --voice reference.wav "Text to say." -o out.wav
+
+# reference-based cloning on 40m: build a voice file once, then speak with it
+# (xn-ptts with patches/xn-ptts-continuation.patch applied)
+python src/make_voice.py 40m voices reference.wav
+ptts --model ckpt40 --lang en --voice voices/reference.safetensors "Text to say." -o out.wav
 ```
 
 Clone a voice only with the speaker's consent.
