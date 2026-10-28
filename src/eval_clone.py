@@ -16,7 +16,7 @@ import soundfile as sf
 sys.path.insert(0, os.path.dirname(__file__))
 from verifiers import Verifiers, load16
 
-W = os.environ.get("PHONON_WORK", "/home/user/work")
+W = "/home/user/work"
 PTTS = f"{W}/xn-ptts/target/release/ptts"
 EVAL = ["vctk_p226", "vctk_p265", "vctk_p294", "vctk_p304", "ls_1089", "ls_121", "ls_237", "lj"]
 if os.environ.get("EVAL_SPK"):
@@ -31,7 +31,7 @@ TEXTS = [
 ]
 TEXTS = TEXTS[: int(os.environ.get("N_TEXTS", len(TEXTS)))]
 N_HELD = 8
-REF_S = 10.0
+REF_S = float(os.environ.get("REF_S", "10.0"))
 
 
 def speaker_sets():
@@ -75,6 +75,8 @@ def write_ref(refs, path):
 
 def synth(ckpt, voice, text, out, seed):
     cmd = [PTTS, "--model", ckpt, "--lang", "en", "--voice", voice, "--seed", str(seed), text, "-o", out]
+    if os.environ.get("CFG"):
+        cmd[1:1] = ["--cfg-coef", os.environ["CFG"]]
     subprocess.run(cmd, check=True, capture_output=True)
 
 
@@ -87,6 +89,7 @@ def main():
     ap.add_argument("ckpt")
     ap.add_argument("out")
     ap.add_argument("--baseline-voice", default=None, help="speak with this fixed voice instead of cloning")
+    ap.add_argument("--voice-dir", default=None, help="speak with VOICE_DIR/<speaker>.safetensors, made from the same reference")
     args = ap.parse_args()
     os.makedirs(args.out, exist_ok=True)
     sets = speaker_sets()
@@ -98,9 +101,13 @@ def main():
         for i, u in enumerate(held):
             emb[("real", s, i)] = V.embed(load16(u["path"]))
         voice = args.baseline_voice or ref_path
+        if args.voice_dir:
+            voice = f"{args.voice_dir}/{s}.safetensors"
         for i, t in enumerate(TEXTS):
             p = f"{args.out}/{s}_clone{i}.wav"
-            synth(args.ckpt, voice, t, p, seed=i)
+            # PREGEN: score clones another generator already wrote there
+            if not (os.environ.get("PREGEN") and os.path.exists(p)):
+                synth(args.ckpt, voice, t, p, seed=i)
             emb[("clone", s, i)] = V.embed(load16(p))
         print(f"{s}: ref {sum(u['dur'] for u in ref):.1f}s from {len(ref)} recordings, {len(held)} held-out", flush=True)
 
